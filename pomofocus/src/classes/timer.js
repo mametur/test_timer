@@ -1,29 +1,27 @@
 export class timer {
-	startTime = 0;
-	currentTime = 0;
-	down = 1; //1 second
-
-	constructor(startTime, timeBoard) {
+	firstTime;
+	constructor(startTime, timeBoard, buttonName) {
 		this.startTime = startTime;
-		//document.getElementById('start_button').addEventListener('click', this.callInterval.bind(this));
 		this.timeBoard = timeBoard;
-		this.running = false;
+		this.setInterval;
+		this.firstTime = startTime;
+		this.buttonName = buttonName;
 	}
 
-	callInterval(event) {
-		if (this.running) {
-			clearInterval(this.currentTime);
-			return;
-		}
-
-		this.running = true;
-		this.currentTime = setInterval(this.countDown.bind(this), 1000);
+	callInterval() {
+		this.setInterval = setInterval(this.countDown.bind(this), 1000);
 	}
 
 	countDown() {
-		this.startTime = this.startTime - this.down;
+		if (this.startTime === 0) {
+			clearInterval(this.setInterval);
+			this.buttonName.innerHTML = 'START';
+			this.timeBoard.innerHTML = this.renderSecond(this.firstTime);
+			return;
+		}
+
+		this.startTime = --this.startTime;
 		this.timeBoard.innerHTML = this.renderSecond(this.startTime);
-		console.log(this.startTime);
 	}
 
 	renderSecond(totalSecond) {
@@ -36,8 +34,26 @@ export class timer {
 		return minutes + ':' + seconds;
 	}
 
+	static clear(params) {
+		params.forEach((element) => {
+			clearInterval(element);
+		});
+	}
 	stop() {
-		clearInterval(this.currentTime);
-		this.running = false;
+		clearInterval(this.setInterval);
+	}
+
+	get interId() {
+		return this.setInterval;
+	}
+
+	get firstTimesValue() {
+		return this.firstTime;
+	}
+	get startTimesValue() {
+		return this.startTime;
+	}
+	set reStartTimes(resetTime) {
+		this.startTime = resetTime;
 	}
 }
