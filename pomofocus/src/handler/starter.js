@@ -10,7 +10,7 @@ export const starter = (event) => {
 	if (start_button.id === 'pomodoro') {
 		if (storeInterval.length > 0) timer.clear(storeInterval);
 
-		if (event.target.innerHTML === 'START') {
+		if (pomodoro.isRunning) {
 			if (pomodoro.startTimesValue === 0) {
 				pomodoro.reStartTimes = pomodoro.firstTimesValue;
 			}
@@ -23,10 +23,11 @@ export const starter = (event) => {
 		} else {
 			event.target.innerHTML = 'START';
 			timer.clear(storeInterval);
+			pomodoro.stop();
 		}
 	} else if (start_button.id === 'short') {
 		if (storeInterval.length > 0) timer.clear(storeInterval);
-		if (event.target.innerHTML === 'START') {
+		if (shortBreak.isRunning) {
 			if (shortBreak.startTimesValue === 0) {
 				shortBreak.reStartTimes = shortBreak.firstTimesValue;
 			}
@@ -40,10 +41,11 @@ export const starter = (event) => {
 		} else {
 			event.target.innerHTML = 'START';
 			timer.clear(storeInterval);
+			shortBreak.stop();
 		}
 	} else if (start_button.id === 'long') {
 		if (storeInterval.length > 0) timer.clear(storeInterval);
-		if (event.target.innerHTML === 'START') {
+		if (longBreak.isRunning) {
 			if (longBreak.startTimesValue === 0) {
 				longBreak.reStartTimes = longBreak.firstTimesValue;
 			}
@@ -56,6 +58,7 @@ export const starter = (event) => {
 		} else {
 			event.target.innerHTML = 'START';
 			timer.clear(storeInterval);
+			longBreak.stop();
 		}
 	}
 };

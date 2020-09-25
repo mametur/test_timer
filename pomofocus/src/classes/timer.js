@@ -1,5 +1,6 @@
 export class timer {
 	firstTime;
+	running = true;
 	constructor(startTime, timeBoard, buttonName) {
 		this.startTime = startTime;
 		this.timeBoard = timeBoard;
@@ -17,9 +18,10 @@ export class timer {
 			clearInterval(this.setInterval);
 			this.buttonName.innerHTML = 'START';
 			this.timeBoard.innerHTML = this.renderSecond(this.firstTime);
+			this.isRunning = true; // when time finish
 			return;
 		}
-
+		this.isRunning = false;
 		this.startTime = --this.startTime;
 		this.timeBoard.innerHTML = this.renderSecond(this.startTime);
 	}
@@ -40,7 +42,7 @@ export class timer {
 		});
 	}
 	stop() {
-		clearInterval(this.setInterval);
+		this.isRunning = true;
 	}
 
 	get interId() {
@@ -55,5 +57,12 @@ export class timer {
 	}
 	set reStartTimes(resetTime) {
 		this.startTime = resetTime;
+	}
+
+	get isRunning() {
+		return this.running;
+	}
+	set isRunning(run) {
+		this.running = run;
 	}
 }
