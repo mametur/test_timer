@@ -3,20 +3,23 @@ import { timer } from '../classes/timer.js';
 const time = document.getElementsByClassName('time-count')[0]; //timer board
 const start_button = document.getElementsByClassName('time-count-btn')[0]; //start button
 export const storeInterval = []; // store interval
-const countDown = new timer(1500, time, start_button); // first
-const countDown1 = new timer(300, time, start_button);
-const countDown2 = new timer(900, time, start_button);
+let pomodoro = new timer(1500, time, start_button); // first
+let shortBreak = new timer(300, time, start_button);
+let longBreak = new timer(900, time, start_button);
 export const starter = (event) => {
 	if (start_button.id === 'pomodoro') {
 		if (storeInterval.length > 0) timer.clear(storeInterval);
 
 		if (event.target.innerHTML === 'START') {
-			if (countDown.startTimesValue === 0) {
-				countDown.reStartTimes = countDown.firstTimesValue;
+			if (pomodoro.startTimesValue === 0) {
+				pomodoro.reStartTimes = pomodoro.firstTimesValue;
 			}
 			event.target.innerHTML = 'STOP';
-			countDown.callInterval(this);
-			storeInterval.push(countDown.interId);
+			pomodoro.callInterval(this);
+			storeInterval.push(pomodoro.interId);
+			// reset previous timer
+			shortBreak = new timer(300, time, start_button);
+			longBreak = new timer(900, time, start_button);
 		} else {
 			event.target.innerHTML = 'START';
 			timer.clear(storeInterval);
@@ -24,12 +27,16 @@ export const starter = (event) => {
 	} else if (start_button.id === 'short') {
 		if (storeInterval.length > 0) timer.clear(storeInterval);
 		if (event.target.innerHTML === 'START') {
-			if (countDown1.startTimesValue === 0) {
-				countDown1.reStartTimes = countDown1.firstTimesValue;
+			if (shortBreak.startTimesValue === 0) {
+				shortBreak.reStartTimes = shortBreak.firstTimesValue;
 			}
+			pomodoro = new timer(1500, time, start_button);
 			event.target.innerHTML = 'STOP';
-			countDown1.callInterval(this);
-			storeInterval.push(countDown1.interId);
+			shortBreak.callInterval(this);
+			storeInterval.push(shortBreak.interId);
+			// reset previous timer
+			pomodoro = new timer(1500, time, start_button);
+			longBreak = new timer(900, time, start_button);
 		} else {
 			event.target.innerHTML = 'START';
 			timer.clear(storeInterval);
@@ -37,12 +44,15 @@ export const starter = (event) => {
 	} else if (start_button.id === 'long') {
 		if (storeInterval.length > 0) timer.clear(storeInterval);
 		if (event.target.innerHTML === 'START') {
-			if (countDown2.startTimesValue === 0) {
-				countDown2.reStartTimes = countDown2.firstTimesValue;
+			if (longBreak.startTimesValue === 0) {
+				longBreak.reStartTimes = longBreak.firstTimesValue;
 			}
 			event.target.innerHTML = 'STOP';
-			countDown2.callInterval(this);
-			storeInterval.push(countDown2.interId);
+			longBreak.callInterval(this);
+			storeInterval.push(longBreak.interId);
+			// reset previous timer
+			pomodoro = new timer(1500, time, start_button);
+			shortBreak = new timer(300, time, start_button);
 		} else {
 			event.target.innerHTML = 'START';
 			timer.clear(storeInterval);
