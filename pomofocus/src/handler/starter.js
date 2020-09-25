@@ -7,6 +7,11 @@ let pomodoro = new timer(1500, time, start_button); // first
 let shortBreak = new timer(300, time, start_button);
 let longBreak = new timer(900, time, start_button);
 export const starter = (event) => {
+	// click sound
+
+	const sound = new Audio('./public/assets/sound/click.mp3');
+	sound.play();
+
 	if (start_button.id === 'pomodoro') {
 		if (storeInterval.length > 0) timer.clear(storeInterval);
 
