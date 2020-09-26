@@ -65,4 +65,13 @@ export class timer {
 	set isRunning(run) {
 		this.running = run;
 	}
+
+	static active(parent) {
+		Array.from(parent.children).forEach((element) => {
+			// make unclicked buttons inactive
+			if (element !== event.target) {
+				element.className = 'time-btn';
+			}
+		});
+	}
 }
